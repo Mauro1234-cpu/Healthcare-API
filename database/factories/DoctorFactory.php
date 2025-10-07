@@ -14,7 +14,7 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            
         ];
     }
 }
