@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Lightit\Doctors\Domain\Actions;
 
-use Lightit\Doctor\Domain\DataTransferObjects\DoctorDto;
-use Lightit\Doctor\Domain\Models\Doctor;
+use Lightit\Doctors\Domain\DataTransferObjects\DoctorDto;
+use Lightit\Doctors\Domain\Models\Doctor;
 
 class StoreDoctorAction
 {

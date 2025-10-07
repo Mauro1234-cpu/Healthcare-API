@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Doctor\Domain\Models;
+namespace Lightit\Doctors\Domain\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+// use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int                          $id
@@ -31,8 +31,11 @@ class Doctor extends Model
 
     protected $hidden = [];
 
-    public function clinics(): BelongsToMany
-    {
-        return $this->belongsToMany(Clinics::class);
-    }
+    // /**
+    //  * return BelongsToMany<Clinic, $this>
+    //  */
+    // public function clinics(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Clinic::class);
+    // }
 }
