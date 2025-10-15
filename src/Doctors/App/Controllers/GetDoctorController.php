@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Lightit\Doctors\App\Resources\DoctorResource;
 use Lightit\Doctors\Domain\Models\Doctor;
 
-final readonly class GetDoctorController
+final class GetDoctorController
 {
     public function __invoke(Doctor $doctor): JsonResponse
     {

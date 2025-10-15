@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Lightit\Doctors\App\Controllers;
 
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Lightit\Doctors\Domain\Models\Doctor;
 
-final readonly class DeleteDoctorController
+final class DeleteDoctorController
 {
-    public function __invoke(Doctor $doctor): JsonResponse
+    public function __invoke(Doctor $doctor): Response
     {
         $doctor->delete();
 
-        return response()->json();
+        return response()->noContent();
     }
 }

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                       $name
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- *
  * @method static \Database\Factories\DoctorFactory                    factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newQuery()
@@ -22,20 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Doctor extends Model
 {
-    protected $guarded = [];
-
-    protected $hidden = [];
-
-    // /**
-    //  * return BelongsToMany<Clinic, $this>
-    //  */
-    // public function clinics(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Clinic::class);
-    // }
+    protected $guarded = ['id'];
 }

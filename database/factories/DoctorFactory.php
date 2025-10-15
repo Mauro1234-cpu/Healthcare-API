@@ -12,10 +12,12 @@ use Lightit\Doctors\Domain\Models\Doctor;
  */
 class DoctorFactory extends Factory
 {
+    protected $model = Doctor::class;
+    
     public function definition(): array
     {
         return [
-
+            'name' =>fake()->name()
         ];
     }
 }

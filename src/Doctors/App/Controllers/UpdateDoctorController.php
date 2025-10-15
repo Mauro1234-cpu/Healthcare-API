@@ -10,7 +10,7 @@ use Lightit\Doctors\App\Resources\DoctorResource;
 use Lightit\Doctors\Domain\Actions\UpdateDoctorAction;
 use Lightit\Doctors\Domain\Models\Doctor;
 
-final readonly class UpdateDoctorController
+final class UpdateDoctorController
 {
     public function __invoke(
         Doctor $doctor,
@@ -20,7 +20,6 @@ final readonly class UpdateDoctorController
         $doctor = $updateDoctorAction->execute($doctor, $request->toDto());
 
         return DoctorResource::make($doctor)
-            ->response()
-            ->setStatusCode(JsonResponse::HTTP_OK);
+            ->response();
     }
 }

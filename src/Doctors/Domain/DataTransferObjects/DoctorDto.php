@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Lightit\Doctors\Domain\DataTransferObjects;
 
-class DoctorDto
+readonly class DoctorDto
 {
     public function __construct(
-        public readonly string $name,
+        public string $name,
     ) {
     }
 }
