@@ -22,7 +22,7 @@ class UpsertDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            self::NAME => ['required', 'string', 'min:4', 'max:4'],
+            self::NAME => ['required', 'string', 'min:4', 'max:30'],
         ];
     }
 

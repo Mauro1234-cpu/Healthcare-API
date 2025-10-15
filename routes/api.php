@@ -58,7 +58,7 @@ Route::prefix('doctors')
             ->withTrashed()
             ->whereNumber('doctor');
         Route::get('/', ListDoctorController::class);
-        Route::post('/', StoreUserController::class);
+        Route::post('/', StoreDoctorController::class);
         Route::put('/{doctor}', UpdateDoctorController::class)
             ->whereNumber('doctor');
         Route::delete('/{doctor}', DeleteDoctorController::class)
