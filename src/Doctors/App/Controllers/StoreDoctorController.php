@@ -13,8 +13,8 @@ final class StoreDoctorController
 {
     public function __invoke(
         UpsertDoctorRequest $request,
-        StoreDoctorAction $storeDoctorAction
-        ): JsonResponse {
+        StoreDoctorAction $storeDoctorAction,
+    ): JsonResponse {
         $doctor = $storeDoctorAction->execute($request->toDto());
 
         return DoctorResource::make($doctor)

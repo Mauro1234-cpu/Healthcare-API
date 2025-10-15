@@ -11,9 +11,8 @@ use Lightit\Doctors\Domain\Actions\ListDoctorAction;
 final readonly class ListDoctorController
 {
     public function __invoke(
-        ListDoctorAction $action
-    ): JsonResponse
-    {
+        ListDoctorAction $action,
+    ): JsonResponse {
         $doctors = $action->execute();
 
         return DoctorResource::collection($doctors)
