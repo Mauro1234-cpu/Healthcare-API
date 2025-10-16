@@ -91,32 +91,6 @@ Route::prefix('clinics')
             });
     });
 
-Route::prefix('doctors')
-    ->group(static function(): void {
-        Route::get('{doctor}', GetDoctorController::class)
-            ->withTrashed()
-            ->whereNumber('doctor');
-        Route::get('/', ListDoctorController::class);
-        Route::post('/', StoreDoctorController::class);
-        Route::put('/{doctor}', UpdateDoctorController::class)
-            ->whereNumber('doctor');
-        Route::delete('/{doctor}', DeleteDoctorController::class)
-            ->whereNumber('doctor');
-    });
-
-Route::prefix('clinics')
-    ->group(static function(): void {
-        Route::get('/{clinic}', GetClinicController::class)
-            ->withTrashed()
-            ->whereNumber('clinic');
-        Route::get('/', ListClinicController::class);
-        Route::post('/', StoreClinicController::class);
-        Route::put('/{clinic}', UpdateClinicController::class)
-            ->whereNumber('clinic');
-        Route::delete('/{clinic}', DeleteClinicController::class)
-            ->whereNumber('clinic');
-    });
-
 Route::prefix('appointments')
     ->group(static function(): void {
         Route::get('/', ListAppointmentController::class);
