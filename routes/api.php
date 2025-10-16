@@ -4,7 +4,20 @@ declare(strict_types=1);
 
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Support\Facades\Route;
-use Lightit\Users\App\Controllers\{GetUserController, DeleteUserController, ListUserController, StoreUserController, UpdateUserController};
+use Lightit\Doctors\App\Controllers\{
+    GetDoctorController,
+    DeleteDoctorController,
+    ListDoctorController,
+    StoreDoctorController,
+    UpdateDoctorController
+};
+use Lightit\Users\App\Controllers\{
+    GetUserController,
+    DeleteUserController,
+    ListUserController,
+    StoreUserController,
+    UpdateUserController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +37,7 @@ Route::middleware('auth:sanctum')
         ]);
     });
 
-/*
-|--------------------------------------------------------------------------
-| Users Routes
-|--------------------------------------------------------------------------
-*/
+
 Route::prefix('users')
     ->middleware([])
     ->group(static function (): void {
@@ -41,4 +50,17 @@ Route::prefix('users')
             ->whereNumber('user');
         Route::delete('/{user}', DeleteUserController::class)
             ->whereNumber('user');
+    });
+
+Route::prefix('doctors')
+    ->group(static function(): void {
+        Route::get('{doctor}', GetDoctorController::class)
+            ->withTrashed()
+            ->whereNumber('doctor');
+        Route::get('/', ListDoctorController::class);
+        Route::post('/', StoreDoctorController::class);
+        Route::put('/{doctor}', UpdateDoctorController::class)
+            ->whereNumber('doctor');
+        Route::delete('/{doctor}', DeleteDoctorController::class)
+            ->whereNumber('doctor');
     });
