@@ -11,11 +11,6 @@ class UpsertDoctorRequest extends FormRequest
 {
     public const string NAME = 'name';
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * @return array<string, mixed>
      */
