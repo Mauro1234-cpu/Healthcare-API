@@ -13,7 +13,7 @@ final class StoreClinicController
 {
     public function __invoke(
         StoreClinicAction $storeClinicAction,
-        UpsertClinicRequest $request
+        UpsertClinicRequest $request,
     ): JsonResponse {
         $clinic = $storeClinicAction->execute($request->toDto());
 

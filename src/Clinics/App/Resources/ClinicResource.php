@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Lightit\Clinics\Domain\Models\Clinic;
 
-
 /**
  * @mixin Clinic
  */

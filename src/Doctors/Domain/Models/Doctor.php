@@ -7,8 +7,8 @@ namespace Lightit\Doctors\Domain\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Lightit\Clinics\Domain\Models\Clinic;
 use Lightit\Appointments\Domain\Models\Appointment;
+use Lightit\Clinics\Domain\Models\Clinic;
 
 // use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -17,6 +17,7 @@ use Lightit\Appointments\Domain\Models\Appointment;
  * @property string                       $name
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
+ *
  * @method static \Database\Factories\DoctorFactory                    factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newQuery()
@@ -26,10 +27,12 @@ use Lightit\Appointments\Domain\Models\Appointment;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereUpdatedAt($value)
  *                                                                                                         s
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Clinic> $clinic
  * @property-read int|null $clinic_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Clinic> $clinics
  * @property-read int|null $clinics_count
+ *
  * @mixin \Eloquent
  */
 class Doctor extends Model
