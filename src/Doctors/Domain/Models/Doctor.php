@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Clinics\Domain\Models\Clinic;
+use Lightit\Appointments\Domain\Models\Appointment;
+
+// use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int                          $id
  * @property string                       $name
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- *
  * @method static \Database\Factories\DoctorFactory                    factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newQuery()
@@ -25,7 +27,6 @@ use Lightit\Clinics\Domain\Models\Clinic;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereUpdatedAt($value)
  *                                                                                                         s
- *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Clinic> $clinic
  * @property-read int|null $clinic_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Clinic> $clinics

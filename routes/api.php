@@ -105,4 +105,3 @@ Route::prefix('appointments')
             });
     });
 
-

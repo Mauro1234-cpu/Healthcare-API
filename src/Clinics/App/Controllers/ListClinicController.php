@@ -11,8 +11,9 @@ use Lightit\Clinics\Domain\Actions\ListClinicAction;
 final class ListClinicController
 {
     public function __invoke(
-        ListClinicAction $action,
-    ): JsonResponse {
+        ListClinicAction $action
+    ): JsonResponse
+    {
         $clinic = $action->execute();
 
         return ClinicResource::collection($clinic)
