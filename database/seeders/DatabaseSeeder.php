@@ -4,23 +4,27 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
 use Database\Factories\DoctorFactory;
-use Database\Factories\UserFactory;
+use Database\Factories\ClinicFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        UserFactory::new()->createMany(35);
-
         $this->call([
             DoctorSeeder::class,
+            ClinicsSeeder::class,
+            UserSeeder::class,
         ]);
+
+
+        // Crear una clinica asociada a un doctor que se crea a la vez
+        // $doctor = DoctorFactory::new()->createOne(['name' => 'Mauro']);
+        // ClinicFactory::new()->withDoctors($doctor)->createOne([
+        //     'name' => 'Hospital Pereira Rosell'
+        // ]);
+
+
     }
 }
