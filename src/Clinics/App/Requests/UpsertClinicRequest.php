@@ -10,13 +10,14 @@ use Lightit\Clinics\Domain\DataTransferObjects\ClinicDto;
 class UpsertClinicRequest extends FormRequest
 {
     public const string NAME = 'name';
+
     public const string ADDRESS = 'address';
 
     public function rules(): array
     {
         return [
             self::NAME => ['required', 'string', 'min:4', 'max:30'],
-            self::ADDRESS => ['required', 'string', 'max:100']
+            self::ADDRESS => ['required', 'string', 'max:100'],
         ];
     }
 

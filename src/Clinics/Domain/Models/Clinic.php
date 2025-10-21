@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Doctors\Domain\Models\Doctor;
 use Lightit\Appointments\Domain\Models\Appointment;
-
+use Lightit\Doctors\Domain\Models\Doctor;
 
 /**
  * @property int                          $id
