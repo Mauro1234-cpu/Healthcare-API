@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Clinics\Domain\Models\Clinic;
 
+// use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 /**
  * @property int                          $id
  * @property string                       $name

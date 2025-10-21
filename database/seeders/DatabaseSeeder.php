@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use Database\Factories\UserFactory;
+use Database\Factories\DoctorFactory;
+use Database\Factories\ClinicFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,13 +14,17 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             DoctorSeeder::class,
-            ClinicSeeder::class,
+            ClinicsSeeder::class,
             UserSeeder::class,
-            UserFactory::new()->createMany(35)
         ]);
 
-        $this->call([
-            DoctorSeeder::class,
-        ]);
+
+        // Crear una clinica asociada a un doctor que se crea a la vez
+        // $doctor = DoctorFactory::new()->createOne(['name' => 'Mauro']);
+        // ClinicFactory::new()->withDoctors($doctor)->createOne([
+        //     'name' => 'Hospital Pereira Rosell'
+        // ]);
+
+
     }
 }
