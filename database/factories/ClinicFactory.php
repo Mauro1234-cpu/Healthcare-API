@@ -20,7 +20,7 @@ class ClinicFactory extends Factory
     {
         return [
             'name' => fake()->company() . ' Medical',
-            'address' => fake()->streetAddress() . ', ' . fake()->city()
+            'address' => fake()->address()
         ];
     }
 
@@ -32,25 +32,4 @@ class ClinicFactory extends Factory
             $clinic->doctors()->attach($doctors, ['active' => true]);
         });
     }
-
-
-
-    // Crear clinicas relacionadas a doctores previamente creados
-    //**
-    //  * @param Collection<int, Doctor> $doctors
-    //  */
-    // public function withDoctors(Collection $doctors): self
-    // {
-    //     return $this->afterCreating(function (Clinic $clinic) use ($doctors) {
-    //         $clinic->doctors()->attach($doctors, ['active' => true]);
-    //     });
-    // }
-
-    // Crear una clinica asociada a un doctor que se crea a la vez
-    // public function withDoctor(Doctor $doctor): self
-    // {
-    //     return $this->afterCreating(function (Clinic $clinic) use ($doctor) {
-    //         $clinic->doctors()->attach($doctor, ['active' => true]);
-    //     });
-    // }
 }

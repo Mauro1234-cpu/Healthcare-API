@@ -11,7 +11,6 @@ class DoctorSeeder extends Seeder
 {
     public function run(): void
     {
-        $factory = new DoctorFactory();
-        $factory->createMany(10);
+        DoctorFactory::new()->createMany(10);
     }
 }

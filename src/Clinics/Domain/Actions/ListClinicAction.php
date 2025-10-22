@@ -16,7 +16,7 @@ class ListClinicAction
     public function execute(): LengthAwarePaginator
     {
         return QueryBuilder::for(Clinic::class)
-            ->orderBy('id', 'asc')
+            ->oldest('id')
             ->paginate();
     }
 }

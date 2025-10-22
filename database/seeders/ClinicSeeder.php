@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use Database\Factories\ClinicFactory;
-use Database\Factories\DoctorFactory;
 use Illuminate\Database\Seeder;
 
-class ClinicsSeeder extends Seeder
+class ClinicSeeder extends Seeder
 {
     public function run(): void
     {

@@ -14,9 +14,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('clinic_id')->constrained('clinics', 'id')->cascadeOnDelete();
             $table->foreignId('doctor_id')->constrained('doctors', 'id')->cascadeOnDelete();
-            $table->timestamp('deleted_at')->nullable();
             $table->boolean('active')->default('false');
-            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
