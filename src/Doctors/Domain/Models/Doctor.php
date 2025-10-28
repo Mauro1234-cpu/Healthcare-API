@@ -9,10 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Clinics\Domain\Models\Clinic;
-use Lightit\Appointments\Domain\Models\Appointment;
-use Lightit\Clinics\Domain\Models\Clinic;
-
-// use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property int                          $id
@@ -34,11 +30,8 @@ use Lightit\Clinics\Domain\Models\Clinic;
  * @property-read int|null $clinic_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Clinic> $clinics
  * @property-read int|null $clinics_count
-<<<<<<< HEAD
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointments
  * @property-read int|null $appointments_count
-=======
->>>>>>> 2da8731 (feat: Correct controllers, requests and models)
  *
  * @mixin \Eloquent
  */
