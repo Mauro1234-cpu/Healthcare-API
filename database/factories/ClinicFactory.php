@@ -24,11 +24,11 @@ class ClinicFactory extends Factory
         ];
     }
 
-    public function withDoctors(int $min, int $max): self
+    public function withDoctors(): self
     {
-        return $this->afterCreating(function (Clinic $clinic) use ($min, $max) {
-            $count = rand($min, $max);
-            $doctors = DoctorFactory::new()->createMany($count);
+        return $this->afterCreating(function (Clinic $clinic) {
+            $count = rand(2, 6);
+            $doctors = DoctorFactory::new()->recycle($clinic)->count($count)->create();
             $clinic->doctors()->attach($doctors, ['active' => true]);
         });
     }

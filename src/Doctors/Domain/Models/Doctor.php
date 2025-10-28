@@ -13,7 +13,6 @@ use Lightit\Clinics\Domain\Models\Clinic;
  * @property string                       $name
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- *
  * @method static \Database\Factories\DoctorFactory                    factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor newQuery()
@@ -23,12 +22,10 @@ use Lightit\Clinics\Domain\Models\Clinic;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Doctor whereUpdatedAt($value)
  *                                                                                                         s
- *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Clinic> $clinic
  * @property-read int|null $clinic_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Clinic> $clinics
  * @property-read int|null $clinics_count
- *
  * @mixin \Eloquent
  */
 class Doctor extends Model
@@ -40,6 +37,6 @@ class Doctor extends Model
      */
     public function clinics(): BelongsToMany
     {
-        return $this->belongsToMany(Clinic::class);
+        return $this->belongsToMany(Clinic::class, 'clinic_doctor');
     }
 }

@@ -21,6 +21,7 @@ class DoctorResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'clinics_count'=> $this->clinics()->count()
         ];
     }
 }
