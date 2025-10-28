@@ -18,7 +18,7 @@ class StoreUserAction
         $user->email = $userDto->emailAddress;
         $user->password = $userDto->password;
 
-        $user->save();
+        $user->saveOrFail();
 
         $user->notify(new UserRegisteredNotification());
 

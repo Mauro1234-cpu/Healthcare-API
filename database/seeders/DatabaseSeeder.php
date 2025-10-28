@@ -14,18 +14,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             DoctorSeeder::class,
-            ClinicsSeeder::class,
+            ClinicSeeder::class,
             UserSeeder::class,
-            AppointmentsSeeder::class,
         ]);
-
-
-        // Crear una clinica asociada a un doctor que se crea a la vez
-        // $doctor = DoctorFactory::new()->createOne(['name' => 'Mauro']);
-        // ClinicFactory::new()->withDoctors($doctor)->createOne([
-        //     'name' => 'Hospital Pereira Rosell'
-        // ]);
-
-
     }
 }

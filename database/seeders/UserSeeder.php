@@ -12,7 +12,6 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $factory = new UserFactory();
-        $factory->createMany(30);
+        UserFactory::new()->createMany(30);
     }
 }
