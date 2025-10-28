@@ -14,7 +14,7 @@ class UpdateClinicAction
         $clinic->name = $clinicDto->name;
         $clinic->address = $clinicDto->address;
 
-        $clinic->save();
+        $clinic->saveOrFail();
 
         return $clinic;
     }

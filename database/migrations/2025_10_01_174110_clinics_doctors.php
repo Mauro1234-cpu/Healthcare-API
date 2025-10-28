@@ -15,7 +15,6 @@ return new class extends Migration
             $table->foreignId('clinic_id')->constrained('clinics', 'id')->cascadeOnDelete();
             $table->foreignId('doctor_id')->constrained('doctors', 'id')->cascadeOnDelete();
             $table->boolean('active')->default('false');
-            $table->softDeletes();
         });
     }
 
