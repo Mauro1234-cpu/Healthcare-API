@@ -16,6 +16,7 @@ use Lightit\Doctors\Domain\Models\Doctor;
  * @property string                       $address
  * @property string                       $assigned_at
  * @property string                       $status
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic query()
@@ -26,10 +27,12 @@ use Lightit\Doctors\Domain\Models\Doctor;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic whereAssignedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic whereStatus($value)
+ *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Doctor> $doctors
  * @property-read int|null $doctors_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Doctor> $doctor
  * @property-read int|null $doctor_count
+ *
  * @mixin \Eloquent
  */
 class Clinic extends Model

@@ -22,7 +22,7 @@ class ClinicResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'address' => $this->address,
-            'doctors_count'=> $this->doctors()->count()
+            'doctors_count'=> $this->doctors()->count(),
         ];
     }
 }
