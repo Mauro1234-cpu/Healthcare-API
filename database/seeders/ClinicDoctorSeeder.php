@@ -13,13 +13,5 @@ class ClinicDoctorSeeder extends Seeder
 {
     public function run(): void
     {
-        $clinics = Clinic::all();
-        $doctors = Doctor::all();
-
-        // foreach ($clinics as $clinic){
-        //     $clinic->doctors()->attach(
-        //         $doctors->random(rand(1, 3))->pluck()
-        //     )
-        // }
     }
 }

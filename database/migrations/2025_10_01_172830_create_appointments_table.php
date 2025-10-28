@@ -12,9 +12,9 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('doctor_id')->constrained('doctors', 'id')->cascadeOnDelete();
             $table->foreignId('clinic_id')->constrained('clinics', 'id')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('doctors', 'id')->cascadeOnDelete();
+            $table->foreignId('doctor_id')->constrained('doctors', 'id')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->datetime('start_time');
             $table->datetime('end_time');
             $table->timestamps();
