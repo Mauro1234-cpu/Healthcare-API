@@ -15,7 +15,7 @@ class UpdateUserAction
         $user->email = $userDto->emailAddress;
         $user->password = $userDto->password;
 
-        $user->save();
+        $user->saveOrFail();
 
         return $user;
     }
