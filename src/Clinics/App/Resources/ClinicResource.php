@@ -2,26 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Doctors\App\Resources;
+namespace Lightit\Clinics\App\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Lightit\Doctors\Domain\Models\Doctor;
+use Lightit\Clinics\Domain\Models\Clinic;
 
 /**
- * @mixin Doctor
+ * @mixin Clinic
  */
-class DoctorResource extends JsonResource
+class ClinicResource extends JsonResource
 {
     /**
-     * @return array{id: int, name: string}
+     * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'clinics_count'=> $this->clinics()->count(),
+            'address' => $this->address,
+            'doctors_count'=> $this->doctors()->count(),
         ];
     }
 }

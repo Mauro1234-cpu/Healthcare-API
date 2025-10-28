@@ -15,7 +15,7 @@ class StoreDoctorAction
 
         $doctor->name = $userDto->name;
 
-        $doctor->save();
+        $doctor->saveOrFail();
 
         return $doctor;
     }
