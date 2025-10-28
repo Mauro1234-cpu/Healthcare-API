@@ -40,8 +40,10 @@ use Lightit\Doctors\Domain\Models\Doctor;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic whereAssignedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic whereStatus($value)
  *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointments
- * @property-read int|null $appointments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Doctor> $doctors
+ * @property-read int|null $doctors_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Doctor> $doctor
+ * @property-read int|null $doctor_count
  *
  * @mixin \Eloquent
  */
