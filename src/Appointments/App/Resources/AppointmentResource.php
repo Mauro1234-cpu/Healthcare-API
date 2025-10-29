@@ -15,7 +15,7 @@ class AppointmentResource extends JsonResource
 {
     /**
      * @return array{
-     *   id: int, 
+     *   id: int,
      *   doctor_id: int,
      *   user_id: int,
      *   clinic_id: int,

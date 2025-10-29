@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Lightit\Clinics\Domain\Models\Clinic;
 use Lightit\Doctors\Domain\Models\Doctor;
 use Lightit\Users\Domain\Models\User;
+use Lightit\Appointments\Domain\Models\Appointment;
 
 /**
- * @extends Factory<\Lightit\Shared\App\Appointments>
+ * @extends Factory<Appointment>
  */
 class AppointmentsFactory extends Factory
 {
