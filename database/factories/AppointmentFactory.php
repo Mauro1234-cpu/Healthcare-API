@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Lightit\Appointments\Domain\Models\Appointment;
@@ -20,26 +21,24 @@ class AppointmentFactory extends Factory
 
     public function definition(): array
     {
+        $appointmentDuration = rand(15, 100);
+        $startTime = CarbonImmutable::now();
+        $endTime = $startTime->addMinutes($appointmentDuration);
+
         return [
-            'start_time' => $start = fake()->dateTime(),
-            'end_time' => (clone $start)->modify('+' . fake()->numberBetween(15, 100) . 'minutes'),
-            'doctor_id' => Doctor::all()->random()->id,
-            'user_id' => User::all()->random()->id,
-            'clinic_id' => Clinic::all()->random()->id
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'doctor_id' => DoctorFactory::new(),
+            'user_id' => UserFactory::new(),
+            'clinic_id' => ClinicFactory::new()
         ];
     }
-
-    // /**
-    //  * @param Collection<int, Doctor> $doctors
-    //  * @param Collection<int, Clinic> $clinics
-    //  * @param Collection<int, User> $users
-    //  */
-    // public function withRelations(Collection $clinics, Collection $doctors, Collection $users): self
-    // {
-    //     return $this->afterMaking(function (Appointment $appointment) use ($clinics, $doctors, $users) {
-    //         $appointment->clinic_id = $clinics->random()->id;
-    //         $appointment->user_id = $users->random()->id;
-    //         $appointment->doctor_id = $doctors->random()->id;
-    //     });
-    // }
 }
+
+//...
+
+$doctors = 
+$clinics = 10
+
+AppointmentFactory::new()->recycle($doctors)->createOne();
+

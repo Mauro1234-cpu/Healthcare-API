@@ -43,12 +43,8 @@ use Lightit\Users\Domain\Models\User;
  */
 class Appointment extends Model
 {
-    protected $fillable = [
-        'doctor_id',
-        'clinic_id',
-        'user_id',
-        'start_time',
-        'end_time',
+    protected $guarded = [
+        'id'
     ];
 
     /**

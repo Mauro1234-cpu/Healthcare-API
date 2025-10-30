@@ -6,7 +6,9 @@ namespace Lightit\Appointments\Domain\Actions;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 use Lightit\Appointments\Domain\Models\Appointment;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Spaze\PHPStan\Rules\Disallowed\Allowed\Allowed;
 
 class ListAppointmentAction
 {
@@ -16,7 +18,12 @@ class ListAppointmentAction
     public function execute(): LengthAwarePaginator
     {
         return QueryBuilder::for(Appointment::class)
-            ->with(['doctor', 'user', 'clinic'])
+            ->allowedFilters([
+                AllowedFilter::belongsTo('clinic'),
+                AllowedFilter::belongsTo('doctor'),
+                AllowedFilter::belongsTo('user')
+                ])
+            ->with(['clinic', 'doctor', 'user'])
             ->orderBy('id', 'asc')
             ->paginate();
     }

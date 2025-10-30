@@ -19,7 +19,7 @@ class UpdateAppointmentAction
         $appointment->start_time = $AppointmentDto->startTime;
         $appointment->end_time = $AppointmentDto->endTime;
 
-        $appointment->save();
+        $appointment->saveOrFail();
 
         return $appointment;
     }
