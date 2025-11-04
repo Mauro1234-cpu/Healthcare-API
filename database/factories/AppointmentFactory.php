@@ -34,11 +34,3 @@ class AppointmentFactory extends Factory
         ];
     }
 }
-
-//...
-
-$doctors = 
-$clinics = 10
-
-AppointmentFactory::new()->recycle($doctors)->createOne();
-
