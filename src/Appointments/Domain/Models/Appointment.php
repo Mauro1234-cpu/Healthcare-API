@@ -44,7 +44,7 @@ use Lightit\Users\Domain\Models\User;
 class Appointment extends Model
 {
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     /**
