@@ -11,10 +11,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clinic_doctor', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('clinic_id')->constrained('clinics', 'id')->cascadeOnDelete();
-            $table->foreignId('doctor_id')->constrained('doctors', 'id')->cascadeOnDelete();
-            $table->boolean('active')->default('false');
+            $table->foreignId('clinic_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
         });
     }
 
