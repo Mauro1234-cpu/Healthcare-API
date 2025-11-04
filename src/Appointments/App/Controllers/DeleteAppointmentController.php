@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Lightit\Appointments\App\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Lightit\Appointments\Domain\Models\Appointment;
 
 final class DeleteAppointmentController
