@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Lightit\Appointments\App\Controllers;
+
+use Illuminate\Http\JsonResponse;
+use Lightit\Appointments\Domain\Models\Appointment;
+
+final class DeleteAppointmentController
+{
+    public function __invoke(Appointment $appointment): JsonResponse
+    {
+        $appointment->delete();
+
+        return response()->json(null, JsonResponse::HTTP_NO_CONTENT);
+    }
+}

@@ -10,14 +10,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('clinic_doctor', function (Blueprint $table) {
+        Schema::create('appointments', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('clinic_id')->constrained()->cascadeOnDelete();
             $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->datetime('start_time');
+            $table->datetime('end_time');
+            $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('clinic_doctor');
+        Schema::dropIfExists('appointments');
     }
 };

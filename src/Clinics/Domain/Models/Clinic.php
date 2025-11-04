@@ -6,6 +6,8 @@ namespace Lightit\Clinics\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Doctors\Domain\Models\Doctor;
 
 /**
@@ -33,6 +35,12 @@ use Lightit\Doctors\Domain\Models\Doctor;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Doctor> $doctor
  * @property-read int|null $doctor_count
  *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic whereAssignedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Clinic whereStatus($value)
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Appointment> $appointments
+ * @property-read int|null $appointments_count
+ *
  * @mixin \Eloquent
  */
 class Clinic extends Model
@@ -43,5 +51,13 @@ class Clinic extends Model
     public function doctors(): BelongsToMany
     {
         return $this->belongsToMany(Doctor::class, 'clinic_doctor');
+    }
+
+    /**
+     * @return HasMany<Appointment, $this>
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
     }
 }
