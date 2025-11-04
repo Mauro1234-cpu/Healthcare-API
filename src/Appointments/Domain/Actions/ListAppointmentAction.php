@@ -8,7 +8,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
-use Spaze\PHPStan\Rules\Disallowed\Allowed\Allowed;
 
 class ListAppointmentAction
 {
@@ -21,7 +20,7 @@ class ListAppointmentAction
             ->allowedFilters([
                 AllowedFilter::belongsTo('clinic'),
                 AllowedFilter::belongsTo('doctor'),
-                AllowedFilter::belongsTo('user')
+                AllowedFilter::belongsTo('user'),
                 ])
             ->with(['clinic', 'doctor', 'user'])
             ->orderBy('id', 'asc')
