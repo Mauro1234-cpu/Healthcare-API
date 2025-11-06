@@ -4,20 +4,35 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\Domain\Actions;
 
+use Lightit\Appointments\App\Exceptions\CustomException;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 use Lightit\Appointments\Domain\Models\Appointment;
 
 class UpdateAppointmentAction
 {
+    public function __construct(
+        protected ValidateDoctorOverlapping $doctorOverlapping,
+        protected ValidateUserOverlapping $userOverapping,
+    ) {
+    }
+
     public function execute(
         Appointment $appointment,
-        AppointmentDto $AppointmentDto,
+        AppointmentDto $appointmentDto,
     ): Appointment {
-        $appointment->doctor_id = $AppointmentDto->doctorId;
-        $appointment->user_id = $AppointmentDto->userId;
-        $appointment->clinic_id = $AppointmentDto->clinicId;
-        $appointment->start_time = $AppointmentDto->startTime;
-        $appointment->end_time = $AppointmentDto->endTime;
+        if ($this->doctorOverlapping->execute($appointmentDto)) {
+            throw new CustomException(message: 'doctor');
+        }
+
+        if ($this->userOverapping->execute($appointmentDto)) {
+            throw new CustomException(message: 'usuario');
+        }
+
+        $appointment->doctor_id = $appointmentDto->doctorId;
+        $appointment->user_id = $appointmentDto->userId;
+        $appointment->clinic_id = $appointmentDto->clinicId;
+        $appointment->start_time = $appointmentDto->startTime;
+        $appointment->end_time = $appointmentDto->endTime;
 
         $appointment->saveOrFail();
 
