@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Doctors\App\Exceptions;
+namespace Lightit\Appointments\App\Exceptions;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class CustomException extends Exception
+class DoctorCustomException extends Exception
 {
     public function render(): Response
     {
