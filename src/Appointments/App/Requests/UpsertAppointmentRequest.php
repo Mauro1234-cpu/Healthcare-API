@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Lightit\Appointments\App\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
+use Lightit\Clinics\Domain\Models\Clinic;
+use Lightit\Doctors\Domain\Models\Doctor;
+use Lightit\Users\Domain\Models\User;
 
 class UpsertAppointmentRequest extends FormRequest
 {
@@ -22,9 +26,9 @@ class UpsertAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            self::DOCTOR_ID => ['required', 'integer'],
-            self::USER_ID => ['required', 'integer'],
-            self::CLINIC_ID => ['required', 'integer'],
+            self::DOCTOR_ID => ['required', 'integer', Rule::exists(Doctor::class)],
+            self::USER_ID => ['required', 'integer', Rule::exists(User::class)],
+            self::CLINIC_ID => ['required', 'integer', Rule::exists(Clinic::class)],
             self::START_TIME => ['required', 'string', 'after_or_equal:now'],
             self::END_TIME => ['required', 'string', 'after:' . self::START_TIME],
         ];
