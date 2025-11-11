@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\Domain\Actions;
 
-use Lightit\Appointments\App\Exceptions\CustomException;
+use Lightit\Appointments\App\Exceptions\RelationException;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 use Lightit\Appointments\Domain\Models\Appointment;
 
@@ -21,11 +21,11 @@ class UpdateAppointmentAction
         AppointmentDto $appointmentDto,
     ): Appointment {
         if ($this->doctorOverlapping->execute($appointmentDto)) {
-            throw new CustomException(message: 'doctor');
+            throw new RelationException(message: 'doctor');
         }
 
         if ($this->userOverapping->execute($appointmentDto)) {
-            throw new CustomException(message: 'usuario');
+            throw new RelationException(message: 'usuario');
         }
 
         $appointment->doctor_id = $appointmentDto->doctor_id;

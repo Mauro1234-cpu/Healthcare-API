@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\Domain\Actions;
 
-use Lightit\Appointments\App\Exceptions\CustomException;
+use Lightit\Appointments\App\Exceptions\OverlappingException;
+use Lightit\Appointments\App\Exceptions\RelationException;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 use Lightit\Appointments\Domain\Models\Appointment;
 
@@ -12,18 +13,23 @@ class StoreAppointmentAction
 {
     public function __construct(
         protected ValidateDoctorOverlapping $doctorOverlapping,
-        protected ValidateUserOverlapping $userOverapping,
+        protected ValidateUserOverlapping $userOverlapping,
+        protected ValidateClinicDoctorRelation $relationClinicDoctor
     ) {
     }
 
     public function execute(AppointmentDto $appointmentDto): Appointment
     {
         if ($this->doctorOverlapping->execute($appointmentDto)) {
-            throw new CustomException(message: 'doctor');
+            throw new OverlappingException(message: 'doctor');
         }
 
-        if ($this->userOverapping->execute($appointmentDto)) {
-            throw new CustomException(message: 'usuario');
+        if ($this->userOverlapping->execute($appointmentDto)) {
+            throw new OverlappingException(message: 'usuario');
+        }
+
+        if (!$this->relationClinicDoctor->execute($appointmentDto)) {
+            throw new RelationException();
         }
 
         $appointment = new Appointment();
