@@ -22,6 +22,7 @@ use Lightit\Users\Domain\Models\User;
  * @property-read Clinic $clinic
  * @property-read Doctor $doctor
  * @property-read User $user
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment query()
@@ -33,9 +34,11 @@ use Lightit\Users\Domain\Models\User;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment whereStartTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment whereUserId($value)
+ *
  * @property-read Clinic|null $clinics
  * @property-read Doctor|null $doctors
  * @property-read User|null $users
+ *
  * @mixin \Eloquent
  */
 class Appointment extends Model
