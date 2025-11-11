@@ -25,7 +25,7 @@ class StoreAppointmentAction
         }
 
         if ($this->userOverlapping->execute($appointmentDto)) {
-            throw new OverlappingException(message: 'usuario');
+            throw new OverlappingException(message: 'user');
         }
 
         if (! $this->relationClinicDoctor->execute($appointmentDto)) {
