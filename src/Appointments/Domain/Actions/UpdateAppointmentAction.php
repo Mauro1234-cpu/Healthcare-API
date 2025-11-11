@@ -13,6 +13,7 @@ class UpdateAppointmentAction
     public function __construct(
         protected ValidateDoctorOverlapping $doctorOverlapping,
         protected ValidateUserOverlapping $userOverapping,
+        protected ValidateClinicDoctorRelation $relationClinicDoctor,
     ) {
     }
 
@@ -26,6 +27,10 @@ class UpdateAppointmentAction
 
         if ($this->userOverapping->execute($appointmentDto)) {
             throw new RelationException(message: 'usuario');
+        }
+
+        if (! $this->relationClinicDoctor->execute($appointmentDto)) {
+            throw new RelationException();
         }
 
         $appointment->doctor_id = $appointmentDto->doctor_id;
