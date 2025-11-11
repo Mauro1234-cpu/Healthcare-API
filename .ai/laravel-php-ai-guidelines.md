@@ -97,7 +97,7 @@ $condition
 ### Routes
 - URLs: kebab-case (`/open-source`)
 - Route names: camelCase (`->name('openSource')`)
-- Parameters: camelCase (`{userId}`)
+- Parameters: camelCase (`{user_id}`)
 - Use single action controllers only: `'/uri', ListSessionsController::class`
 
 ### Controllers

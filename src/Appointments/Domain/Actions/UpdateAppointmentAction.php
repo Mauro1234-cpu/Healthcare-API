@@ -28,9 +28,9 @@ class UpdateAppointmentAction
             throw new CustomException(message: 'usuario');
         }
 
-        $appointment->doctor_id = $appointmentDto->doctorId;
-        $appointment->user_id = $appointmentDto->userId;
-        $appointment->clinic_id = $appointmentDto->clinicId;
+        $appointment->doctor_id = $appointmentDto->doctor_id;
+        $appointment->user_id = $appointmentDto->user_id;
+        $appointment->clinic_id = $appointmentDto->clinic_id;
         $appointment->start_time = $appointmentDto->startTime;
         $appointment->end_time = $appointmentDto->endTime;
 
