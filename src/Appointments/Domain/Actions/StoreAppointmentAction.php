@@ -14,7 +14,7 @@ class StoreAppointmentAction
     public function __construct(
         protected ValidateDoctorOverlapping $doctorOverlapping,
         protected ValidateUserOverlapping $userOverlapping,
-        protected ValidateClinicDoctorRelation $relationClinicDoctor
+        protected ValidateClinicDoctorRelation $relationClinicDoctor,
     ) {
     }
 
@@ -28,7 +28,7 @@ class StoreAppointmentAction
             throw new OverlappingException(message: 'usuario');
         }
 
-        if (!$this->relationClinicDoctor->execute($appointmentDto)) {
+        if (! $this->relationClinicDoctor->execute($appointmentDto)) {
             throw new RelationException();
         }
 
