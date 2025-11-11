@@ -26,9 +26,9 @@ class UpsertAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            self::DOCTOR_ID => ['required', 'integer', Rule::exists(Doctor::class)],
-            self::USER_ID => ['required', 'integer', Rule::exists(User::class)],
-            self::CLINIC_ID => ['required', 'integer', Rule::exists(Clinic::class)],
+            self::DOCTOR_ID => ['required', 'integer', Rule::exists(Doctor::class, 'id')],
+            self::USER_ID => ['required', 'integer', Rule::exists(User::class, 'id')],
+            self::CLINIC_ID => ['required', 'integer', Rule::exists(Clinic::class, 'id')],
             self::START_TIME => ['required', 'string', 'after_or_equal:now'],
             self::END_TIME => ['required', 'string', 'after:' . self::START_TIME],
         ];
