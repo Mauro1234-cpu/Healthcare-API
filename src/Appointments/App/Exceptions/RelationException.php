@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\App\Exceptions;
 
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Lightit\Shared\App\Exceptions\Http\HttpException;
 
-class RelationException extends Exception
+class RelationException extends HttpException
 {
     public function render(): Response
     {
-        $success = 'Error 409';
-        $message = 'Este médico no trabaja en esta clinica';
+        $status = 409;
+        $message = 'This doctor does not work at this clinic';
 
-        return response(['success' => $success, 'message' => $message])
+        return response(['status' => $status, 'message' => $message])
         ->setStatusCode(JsonResponse::HTTP_CONFLICT);
     }
 }

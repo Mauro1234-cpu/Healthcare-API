@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\App\Exceptions;
 
-use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Lightit\Shared\App\Exceptions\Http\HttpException;
 
-class OverlappingException extends Exception
+class OverlappingException extends HttpException
 {
     public function render(): Response
     {
-        $success = 'Error 409';
-        $message = 'El ' . $this->message . ' ya tiene una cita agendada en este horario.';
+        $status = 409;
+        $message = 'This ' . $this->message . ' has an appointment scheduled at this time.';
 
-        return response(['success' => $success, 'message' => $message])
+        return response(['status' => $status, 'message' => $message])
         ->setStatusCode(JsonResponse::HTTP_CONFLICT);
     }
 }
