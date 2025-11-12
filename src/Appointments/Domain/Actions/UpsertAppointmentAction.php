@@ -9,7 +9,7 @@ use Lightit\Appointments\App\Exceptions\RelationException;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 use Lightit\Appointments\Domain\Models\Appointment;
 
-class StoreAppointmentAction
+class UpsertAppointmentAction
 {
     public function __construct(
         protected ValidateDoctorOverlapping $doctorOverlapping,
@@ -18,8 +18,10 @@ class StoreAppointmentAction
     ) {
     }
 
-    public function execute(AppointmentDto $appointmentDto): Appointment
+    public function execute(AppointmentDto $appointmentDto, Appointment|null $appointment = null): Appointment
     {
+        $appointment ??= new Appointment();
+
         if ($this->doctorOverlapping->execute($appointmentDto)) {
             throw new OverlappingException(subject: 'doctor');
         }
