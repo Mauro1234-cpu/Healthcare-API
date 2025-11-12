@@ -35,6 +35,12 @@ use Lightit\Appointments\App\Controllers\ {
     UpdateAppointmentController
 };
 
+use Lightit\Authentication\App\Controllers\ {
+    LoginController,
+    LogoutController,
+    RefreshController
+};
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -60,6 +66,12 @@ Route::prefix('users')
                 Route::delete('/', DeleteUserController::class);
             });
     });
+
+Route::prefix('auth')->group(static function () {
+    Route::post('login', LoginController::class);
+    Route::post('logout', LogoutController::class);
+    Route::post('refresh', RefreshController::class);
+});
 
 Route::prefix('doctors')
     ->group(static function(): void {
