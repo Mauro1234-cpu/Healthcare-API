@@ -59,6 +59,22 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     */
+    public function getJWTIdentifier(): mixed
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key-value array containing any custom claims to be added to the JWT.
+     */
+    public function getJWTCustomClaims(): array
+    {
+        return [];
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
