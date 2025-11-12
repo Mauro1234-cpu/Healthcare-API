@@ -21,11 +21,11 @@ class StoreAppointmentAction
     public function execute(AppointmentDto $appointmentDto): Appointment
     {
         if ($this->doctorOverlapping->execute($appointmentDto)) {
-            throw new OverlappingException(message: 'doctor');
+            throw new OverlappingException(subject: 'doctor');
         }
 
         if ($this->userOverlapping->execute($appointmentDto)) {
-            throw new OverlappingException(message: 'user');
+            throw new OverlappingException(subject: 'user');
         }
 
         if (! $this->relationClinicDoctor->execute($appointmentDto)) {
