@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace Lightit\Appointments\App\Exceptions;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Lightit\Shared\App\Exceptions\Http\HttpException;
 
 class OverlappingException extends HttpException
 {
-    public function render(): Response
-    {
-        $status = 409;
-        $message = 'This ' . $this->message . ' has an appointment scheduled at this time.';
+    protected int $status = JsonResponse::HTTP_CONFLICT;
 
-        return response(['status' => $status, 'message' => $message])
-        ->setStatusCode(JsonResponse::HTTP_CONFLICT);
+    protected string $errorCode = 'APPOINTMENT_OVERLAP';
+
+    public function __construct(protected string $subject)
+    {
+        parent::__construct(message: 'This ' . $this->subject . ' has an appointment scheduled at this time.');
     }
 }
