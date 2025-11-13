@@ -8,6 +8,7 @@ use Lightit\Appointments\App\Exceptions\OverlappingException;
 use Lightit\Appointments\App\Exceptions\RelationException;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 use Lightit\Appointments\Domain\Models\Appointment;
+use Lightit\Users\Domain\Models\User;
 
 class UpsertAppointmentAction
 {
@@ -18,15 +19,18 @@ class UpsertAppointmentAction
     ) {
     }
 
-    public function execute(AppointmentDto $appointmentDto, Appointment|null $appointment = null): Appointment
-    {
+    public function execute(
+        AppointmentDto $appointmentDto,
+        User $user,
+        Appointment|null $appointment = null,
+    ): Appointment {
         $appointment ??= new Appointment();
 
         if ($this->doctorOverlapping->execute($appointmentDto)) {
             throw new OverlappingException(subject: 'doctor');
         }
 
-        if ($this->userOverlapping->execute($appointmentDto)) {
+        if ($this->userOverlapping->execute($appointmentDto, $user)) {
             throw new OverlappingException(subject: 'user');
         }
 
@@ -37,7 +41,7 @@ class UpsertAppointmentAction
         $appointment = new Appointment();
 
         $appointment->doctor_id = $appointmentDto->doctor_id;
-        $appointment->user_id = $appointmentDto->user_id;
+        $appointment->user_id = $user->id;
         $appointment->clinic_id = $appointmentDto->clinic_id;
         $appointment->start_time = $appointmentDto->startTime;
         $appointment->end_time = $appointmentDto->endTime;

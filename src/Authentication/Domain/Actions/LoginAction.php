@@ -24,7 +24,7 @@ final class LoginAction
     {
         /** @var JWTGuard $guard */
         $guard = $this->factory->guard();
-
+        
         if (! $token = $guard->attempt($credentials)) {
             throw new UnauthorizedException();
         }
