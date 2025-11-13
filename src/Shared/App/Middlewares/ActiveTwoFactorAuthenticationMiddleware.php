@@ -6,6 +6,7 @@ namespace Lightit\Shared\App\Middlewares;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Lightit\Shared\App\Exceptions\Http\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +23,7 @@ final readonly class ActiveTwoFactorAuthenticationMiddleware
             return $next($request);
         }
 
-        $guardName = config('google2fa.guard');
+        $guardName = Config::string('google2fa.guard');
 
         /** @var \Lightit\Authentication\Domain\TwoFactorAuthenticatable  $user */
         $user = $request->user($guardName);
