@@ -7,15 +7,15 @@ namespace Lightit\Appointments\App\Controllers;
 use Illuminate\Http\JsonResponse;
 use Lightit\Appointments\App\Requests\UpsertAppointmentRequest;
 use Lightit\Appointments\App\Resources\AppointmentResource;
-use Lightit\Appointments\Domain\Actions\StoreAppointmentAction;
+use Lightit\Appointments\Domain\Actions\UpsertAppointmentAction;
 
 final class StoreAppointmentController
 {
     public function __invoke(
-        StoreAppointmentAction $storeClinicAction,
+        UpsertAppointmentAction $upsertAppointmentAction,
         UpsertAppointmentRequest $request,
     ): JsonResponse {
-        $appointment = $storeClinicAction->execute($request->toDto());
+        $appointment = $upsertAppointmentAction->execute($request->toDto());
 
         return AppointmentResource::make($appointment)
             ->response()

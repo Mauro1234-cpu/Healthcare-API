@@ -29,7 +29,7 @@ class ClinicFactory extends Factory
         return $this->afterCreating(function (Clinic $clinic) {
             $count = rand(2, 6);
             $doctors = DoctorFactory::new()->recycle($clinic)->count($count)->create();
-            $clinic->doctors()->attach($doctors, ['active' => true]);
+            $clinic->doctors()->attach($doctors);
         });
     }
 }

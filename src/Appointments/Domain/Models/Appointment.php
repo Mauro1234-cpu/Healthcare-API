@@ -6,6 +6,7 @@ namespace Lightit\Appointments\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Lightit\Clinics\Domain\Models\Clinic;
 use Lightit\Doctors\Domain\Models\Doctor;
 use Lightit\Users\Domain\Models\User;
@@ -38,11 +39,19 @@ use Lightit\Users\Domain\Models\User;
  * @property-read Clinic|null $clinics
  * @property-read Doctor|null $doctors
  * @property-read User|null $users
+ * @property \Carbon\CarbonImmutable|null $deleted_at
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Appointment withoutTrashed()
  *
  * @mixin \Eloquent
  */
 class Appointment extends Model
 {
+    use SoftDeletes;
+    
     protected $guarded = [
         'id',
     ];
