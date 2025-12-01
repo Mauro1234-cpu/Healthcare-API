@@ -10,7 +10,7 @@ use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 readonly class LogoutAction
 {
     public function __construct(
-        private  AuthFactory $factory,
+        private AuthFactory $factory,
     ) {
     }
 
