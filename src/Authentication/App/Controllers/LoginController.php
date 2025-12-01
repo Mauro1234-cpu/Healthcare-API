@@ -6,22 +6,22 @@ namespace Lightit\Authentication\App\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Lightit\Authentication\App\Requests\LoginRequest;
+use Lightit\Authentication\App\Rescources\LoginResource;
 use Lightit\Authentication\Domain\Actions\LoginAction;
+use Lightit\Authentication\Domain\DataTransferObjects\LoginInputDto;
 
 class LoginController
 {
     public function __invoke(LoginRequest $request, LoginAction $loginAction): JsonResponse
     {
-        $credentials = $request->only([$request::EMAIL, $request::PASSWORD]);
-        
-        $loginDto = $loginAction->execute($credentials);
+        $dto = new LoginInputDto(
+            email: $request->input(LoginRequest::EMAIL),
+            password: $request->input(LoginRequest::PASSWORD)
+        );
 
-        return response()->json([
-            'data' => [
-                'access_token' => $loginDto->accessToken,
-                'token_type' => $loginDto->tokenType,
-                'expires_in' => $loginDto->expiresIn,
-            ],
-        ]);
+        $loginDto = $loginAction->execute($dto);
+
+        return LoginResource::make($loginDto)
+            ->response(JsonResponse::HTTP_OK);
     }
 }

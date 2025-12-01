@@ -6,6 +6,7 @@ namespace Lightit\Authentication\Domain\Actions;
 
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Lightit\Authentication\Domain\DataTransferObjects\LoginDto;
+use Lightit\Authentication\Domain\DataTransferObjects\LoginInputDto;
 use Lightit\Shared\App\Exceptions\Http\UnauthorizedException;
 use Lightit\Users\Domain\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Factory as JWTAuth;
@@ -20,12 +21,15 @@ final class LoginAction
     }
 
     /** @throws UnauthorizedException */
-    public function execute(array $credentials): LoginDto
+    public function execute(LoginInputDto $dto): LoginDto
     {
         /** @var JWTGuard $guard */
         $guard = $this->factory->guard();
-        
-        if (! $token = $guard->attempt($credentials)) {
+
+        if (! $token = $guard->attempt([
+            'email' => $dto->email,
+            'password' => $dto->password
+        ])) {
             throw new UnauthorizedException();
         }
 
