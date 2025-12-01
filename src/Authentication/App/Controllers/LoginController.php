@@ -15,13 +15,14 @@ class LoginController
     public function __invoke(LoginRequest $request, LoginAction $loginAction): JsonResponse
     {
         $dto = new LoginInputDto(
-            email: $request->input(LoginRequest::EMAIL),
-            password: $request->input(LoginRequest::PASSWORD)
+            email: LoginRequest::EMAIL,
+            password: LoginRequest::PASSWORD
         );
 
         $loginDto = $loginAction->execute($dto);
 
         return LoginResource::make($loginDto)
-            ->response(JsonResponse::HTTP_OK);
+            ->response()
+            ->setStatusCode(JsonResponse::HTTP_OK);
     }
 }
