@@ -28,7 +28,7 @@ final class LoginAction
 
         if (! $token = $guard->attempt([
             'email' => $dto->email,
-            'password' => $dto->password
+            'password' => $dto->password,
         ])) {
             throw new UnauthorizedException();
         }
