@@ -7,6 +7,7 @@ namespace Lightit\Appointments\Domain\Actions;
 use Lightit\Appointments\App\Exceptions\OverlappingException;
 use Lightit\Appointments\App\Exceptions\RelationException;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
+use Lightit\Appointments\Domain\Enums\Subject;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Users\Domain\Models\User;
 
@@ -27,18 +28,16 @@ class UpsertAppointmentAction
         $appointment ??= new Appointment();
 
         if ($this->doctorOverlapping->execute($appointmentDto)) {
-            throw new OverlappingException(subject: 'doctor');
+            throw new OverlappingException(Subject::DOCTOR);
         }
 
         if ($this->userOverlapping->execute($appointmentDto, $user)) {
-            throw new OverlappingException(subject: 'user');
+            throw new OverlappingException(Subject::USER);
         }
 
         if (! $this->relationClinicDoctor->execute($appointmentDto)) {
             throw new RelationException();
         }
-
-        $appointment = new Appointment();
 
         $appointment->doctor_id = $appointmentDto->doctorId;
         $appointment->user_id = $user->id;
