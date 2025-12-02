@@ -12,9 +12,9 @@ use Lightit\Doctors\Domain\Models\Doctor;
 
 class UpsertAppointmentRequest extends FormRequest
 {
-    public const string DOCTOR_ID = 'doctor_id';
+    public const string DOCTOR_ID = 'doctorId';
 
-    public const string CLINIC_ID = 'clinic_id';
+    public const string CLINIC_ID = 'clinicId';
 
     public const string START_TIME = 'startTime';
 
@@ -33,8 +33,8 @@ class UpsertAppointmentRequest extends FormRequest
     public function toDto(): AppointmentDto
     {
         return new AppointmentDto(
-            doctor_id: $this->integer(self::DOCTOR_ID),
-            clinic_id: $this->integer(self::CLINIC_ID),
+            doctorId: $this->integer(self::DOCTOR_ID),
+            clinicId: $this->integer(self::CLINIC_ID),
             startTime: $this->string(self::START_TIME)->toString(),
             endTime: $this->string(self::END_TIME)->toString()
         );

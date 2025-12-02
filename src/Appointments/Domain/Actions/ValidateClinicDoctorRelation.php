@@ -11,8 +11,8 @@ class ValidateClinicDoctorRelation
 {
     public function execute(AppointmentDto $appointmentDto): bool
     {
-        return Doctor::whereId($appointmentDto->doctor_id)
-            ->whereRelation('clinics', 'id', $appointmentDto->clinic_id)
+        return Doctor::whereId($appointmentDto->doctorId)
+            ->whereRelation('clinics', 'id', $appointmentDto->clinicId)
             ->exists();
     }
 }

@@ -40,9 +40,9 @@ class UpsertAppointmentAction
 
         $appointment = new Appointment();
 
-        $appointment->doctor_id = $appointmentDto->doctor_id;
+        $appointment->doctor_id = $appointmentDto->doctorId;
         $appointment->user_id = $user->id;
-        $appointment->clinic_id = $appointmentDto->clinic_id;
+        $appointment->clinic_id = $appointmentDto->clinicId;
         $appointment->start_time = $appointmentDto->startTime;
         $appointment->end_time = $appointmentDto->endTime;
 
