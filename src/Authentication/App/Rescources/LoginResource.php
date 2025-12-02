@@ -14,16 +14,16 @@ class LoginResource extends JsonResource
      * @var LoginDto
      */
     public $resource;
-    
+
     /**
-     * @return array{access_token: string, token_type: string, expires_in: int}
+     * @return array{accessToken: string, tokenType: string, expiresIn: int}
      */
     public function toArray(Request $request): array
     {
         return [
-            'access_token' => $this->resource->accessToken,
-            'token_type' => $this->resource->tokenType,
-            'expires_in' => $this->resource->expiresIn,
+            'accessToken' => $this->resource->accessToken,
+            'tokenType' => $this->resource->tokenType,
+            'expiresIn' => $this->resource->expiresIn,
         ];
     }
 }
