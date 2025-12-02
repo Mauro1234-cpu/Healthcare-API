@@ -21,7 +21,6 @@ class RefreshController
         );
 
         return RefreshResource::make($dto)
-            ->response()
-            ->setStatusCode(JsonResponse::HTTP_OK);
+            ->response();
     }
 }
