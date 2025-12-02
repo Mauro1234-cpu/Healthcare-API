@@ -59,7 +59,7 @@ describe('appointments', function (): void {
         $user = UserFactory::new()->createOne();
         $clinic = ClinicFactory::new()->createOne();
         $clinic->doctors()->attach($doctor);
-        
+
         $dto = new AppointmentDto(
             doctor_id: $doctor->id,
             user_id: $user->id,
