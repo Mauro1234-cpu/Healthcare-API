@@ -21,9 +21,8 @@ describe('clinic-doctor relation validation', function (): void {
         $clinic = ClinicFactory::new()->createOne();
 
         $dto = new AppointmentDto(
-            doctor_id: $doctor->id,
-            user_id: $user->id,
-            clinic_id: $clinic->id,
+            doctorId: $doctor->id,
+            clinicId: $clinic->id,
             startTime: now()->toDateTimeString(),
             endTime: now()->addHour()->toDateTimeString()
         );
@@ -35,7 +34,7 @@ describe('clinic-doctor relation validation', function (): void {
         );
 
         try {
-            $action->execute($dto);
+            $action->execute($dto, $user);
             $this->fail('Expecte RelationException was not thrown.');
         } catch (RelationException $e) {
             expect($e->getMessage())->tobe('This doctor does not work at this clinic');
@@ -49,9 +48,8 @@ describe('clinic-doctor relation validation', function (): void {
         $clinic->doctors()->attach($doctor);
 
         $dto = new AppointmentDto(
-            doctor_id: $doctor->id,
-            user_id: $user->id,
-            clinic_id: $clinic->id,
+            doctorId: $doctor->id,
+            clinicId: $clinic->id,
             startTime: now()->toDateTimeString(),
             endTime: now()->addHour()->toDateTimeString()
         );
@@ -62,7 +60,7 @@ describe('clinic-doctor relation validation', function (): void {
             new ValidateClinicDoctorRelation(),
         );
 
-        expect(fn (): \Lightit\Appointments\Domain\Models\Appointment => $action->execute($dto))->not()->toThrow(
+        expect(fn (): \Lightit\Appointments\Domain\Models\Appointment => $action->execute($dto, $user))->not()->toThrow(
             RelationException::class
         );
     });

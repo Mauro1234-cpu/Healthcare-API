@@ -23,9 +23,8 @@ describe('appointments', function (): void {
         $clinic->doctors()->attach($doctor);
 
         $dto = new AppointmentDto(
-            doctor_id: $doctor->id,
-            user_id: $user->id,
-            clinic_id: $clinic->id,
+            doctorId: $doctor->id,
+            clinicId: $clinic->id,
             startTime: now()->toDateTimeString(),
             endTime: now()->subHour()->toDateTimeString()
         );
@@ -37,7 +36,7 @@ describe('appointments', function (): void {
         );
 
         try {
-            $action->execute($dto);
+            $action->execute($dto, $user);
             $this->fail('Expected error message was not thrown.');
         } catch (InvalidDatesException $e) {
             expect($e->getMessage())->tobe('The end time field must be a date after start time.');
@@ -51,9 +50,8 @@ describe('appointments', function (): void {
         $clinic->doctors()->attach($doctor);
 
         $dto = new AppointmentDto(
-            doctor_id: $doctor->id,
-            user_id: $user->id,
-            clinic_id: $clinic->id,
+            doctorId: $doctor->id,
+            clinicId: $clinic->id,
             startTime: now()->toDateTimeString(),
             endTime: now()->addHour()->toDateTimeString()
         );
@@ -64,6 +62,6 @@ describe('appointments', function (): void {
             new ValidateClinicDoctorRelation(),
         );
 
-        expect(fn (): Appointment => $action->execute($dto))->not()->toThrow(InvalidDatesException::class);
+        expect(fn (): Appointment => $action->execute($dto, $user))->not()->toThrow(InvalidDatesException::class);
     });
 });
