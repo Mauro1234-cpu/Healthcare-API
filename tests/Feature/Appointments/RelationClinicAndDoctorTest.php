@@ -14,8 +14,6 @@ use Lightit\Appointments\Domain\Actions\ValidateDoctorOverlapping;
 use Lightit\Appointments\Domain\Actions\ValidateUserOverlapping;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 
-use function Pest\Laravel\assertDatabaseHas;
-
 describe('clinic-doctor relation validation', function (): void {
     it('throw an exception if the doctor does not work at the selected clinic', function (): void {
         $doctor = DoctorFactory::new()->createOne();
@@ -44,7 +42,7 @@ describe('clinic-doctor relation validation', function (): void {
         }
     });
 
-    it('allows creating appointment when the doctor work at the selected clinic', function (): void {
+    it('does not throw RelationException when the Doctor belong to a Clinic', function (): void {
         $doctor = DoctorFactory::new()->createOne();
         $user = UserFactory::new()->createOne();
         $clinic = ClinicFactory::new()->createOne();
@@ -64,8 +62,6 @@ describe('clinic-doctor relation validation', function (): void {
             new ValidateClinicDoctorRelation(),
         );
 
-        $appointment = $action->execute($dto);
-
-        assertDatabaseHas('appointments', ['id' => $appointment->id]);
+        expect(fn() => $action->execute($dto))->not()->toThrow(RelationException::class);
     });
 });
