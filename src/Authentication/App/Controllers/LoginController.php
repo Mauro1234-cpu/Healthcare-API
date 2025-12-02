@@ -13,11 +13,11 @@ class LoginController
 {
     public function __invoke(LoginRequest $request, LoginAction $loginAction): JsonResponse
     {
-        $dto = $request->toDto();
+        $credentials = $request->toDto();
 
-        $loginDto = $loginAction->execute($dto);
+        $auth = $loginAction->execute($credentials);
 
-        return LoginResource::make($loginDto)
+        return LoginResource::make($auth)
             ->response();
     }
 }

@@ -14,13 +14,13 @@ class RefreshController
 {
     public function __invoke(JWTAuth $jwtAuth, JWT $jwt): JsonResponse
     {
-        $dto = new LoginDto(
+        $credentials = new LoginDto(
             accessToken: $jwt->refresh(),
             tokenType: 'Bearer',
             expiresIn: $jwtAuth->getTTL() * 60,
         );
 
-        return RefreshResource::make($dto)
+        return RefreshResource::make($credentials)
             ->response();
     }
 }

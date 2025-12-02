@@ -14,6 +14,8 @@ use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 
 final readonly class LoginAction
 {
+    private const SECONDS_PER_MINUTE = 60;
+
     public function __construct(
         private AuthFactory $factory,
         private JWTAuth $jwtAuth,
@@ -37,7 +39,7 @@ final readonly class LoginAction
         return new LoginDto(
             $token,
             'Bearer',
-            $this->jwtAuth->getTTL() * 60,
+            $this->jwtAuth->getTTL() * self::SECONDS_PER_MINUTE,
         );
     }
 
@@ -51,8 +53,8 @@ final readonly class LoginAction
 
         return new LoginDto(
             $token,
-            'bearer',
-            $this->jwtAuth->getTTL() * 60,
+            'Bearer',
+            $this->jwtAuth->getTTL() * self::SECONDS_PER_MINUTE,
         );
     }
 }
