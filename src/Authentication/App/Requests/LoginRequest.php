@@ -6,6 +6,7 @@ namespace Lightit\Authentication\App\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Lightit\Authentication\Domain\DataTransferObjects\LoginInputDto;
 
 class LoginRequest extends FormRequest
 {
@@ -19,5 +20,13 @@ class LoginRequest extends FormRequest
             self::EMAIL => ['required', Rule::email()->strict()],
             self::PASSWORD => ['required'],
         ];
+    }
+
+    public function toDto(): LoginInputDto
+    {
+        return new LoginInputDto(
+            email: $this->string(LoginRequest::EMAIL)->toString(),
+            password: $this->string(LoginRequest::PASSWORD)->toString()
+        );
     }
 }
