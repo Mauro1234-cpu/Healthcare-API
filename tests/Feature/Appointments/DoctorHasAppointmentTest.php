@@ -33,9 +33,8 @@ describe('appointments', function (): void {
         ]);
 
         $dto = new AppointmentDto(
-            doctor_id: $doctor->id,
-            user_id: 4,
-            clinic_id: $clinic->id,
+            doctorId: $doctor->id,
+            clinicId: $clinic->id,
             startTime: now()->addMinutes(30)->toDateTimeString(),
             endTime: now()->addMinutes(90)->toDateTimeString(),
         );
@@ -47,7 +46,7 @@ describe('appointments', function (): void {
         );
 
         try {
-            $action->execute($dto);
+            $action->execute($dto, $user);
             $this->fail('Expected OverlappingException was not thrown.');
         } catch (OverlappingException $e) {
             expect($e->getMessage())->toBe('This doctor has an appointment scheduled at this time.');
@@ -61,9 +60,8 @@ describe('appointments', function (): void {
         $clinic->doctors()->attach($doctor);
 
         $dto = new AppointmentDto(
-            doctor_id: $doctor->id,
-            user_id: $user->id,
-            clinic_id: $clinic->id,
+            doctorId: $doctor->id,
+            clinicId: $clinic->id,
             startTime: now()->toDateTimeString(),
             endTime: now()->addHour()->toDateTimeString()
         );
@@ -74,7 +72,7 @@ describe('appointments', function (): void {
             new ValidateClinicDoctorRelation()
         );
 
-        $appointment = $action->execute($dto);
+        $appointment = $action->execute(appointmentDto: $dto, user: $user);
 
         assertDatabaseHas('appointments', ['id' => $appointment->id]);
     });

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\Domain\Actions;
 
-use Carbon\Carbon;
 use Lightit\Appointments\App\Exceptions\InvalidDatesException;
 use Lightit\Appointments\App\Exceptions\OverlappingException;
 use Lightit\Appointments\App\Exceptions\RelationException;
@@ -47,11 +46,9 @@ class UpsertAppointmentAction
             throw new InvalidDatesException();
         }
 
-        $appointment = new Appointment();
-
-        $appointment->doctor_id = $appointmentDto->doctor_id;
-        $appointment->user_id = $appointmentDto->user_id;
-        $appointment->clinic_id = $appointmentDto->clinic_id;
+        $appointment->doctor_id = $appointmentDto->doctorId;
+        $appointment->user_id = $user->id;
+        $appointment->clinic_id = $appointmentDto->clinicId;
         $appointment->start_time = $appointmentDto->startTime;
         $appointment->end_time = $appointmentDto->endTime;
 
