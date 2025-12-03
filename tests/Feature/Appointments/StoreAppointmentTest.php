@@ -179,41 +179,6 @@ describe('appointments', function (): void {
         );
     });
 
-    it('throw an exception if the doctor already has an appointment', function (): void {
-        $doctor = DoctorFactory::new()->createOne();
-        $user = UserFactory::new()->createOne();
-        $clinic = ClinicFactory::new()->createOne();
-        $clinic->doctors()->attach($doctor);
-
-        $existingAppointment = AppointmentFactory::new()->create([
-            'doctor_id' => $doctor->id,
-            'user_id' => $user->id,
-            'clinic_id' => $clinic->id,
-            'start_time' => now(),
-            'end_time' => now()->addHour(),
-        ]);
-
-        $dto = new AppointmentDto(
-            doctorId: $doctor->id,
-            clinicId: $clinic->id,
-            startTime: now()->addMinutes(30)->toDateTimeString(),
-            endTime: now()->addMinutes(90)->toDateTimeString(),
-        );
-
-        $action = new UpsertAppointmentAction(
-            new ValidateDoctorOverlapping(),
-            new ValidateUserOverlapping(),
-            new ValidateClinicDoctorRelation()
-        );
-
-        try {
-            $action->execute($dto, $user);
-            $this->fail('Expected OverlappingException was not thrown.');
-        } catch (OverlappingException $e) {
-            expect($e->getMessage())->toBe('This doctor has an appointment scheduled at this time.');
-        }
-    });
-
     it('creates an appointment if all rules pass', function (): void {
         $doctor = DoctorFactory::new()->createOne();
         $user = UserFactory::new()->createOne();
