@@ -12,14 +12,14 @@ use Lightit\Doctors\Domain\Models\Doctor;
 use Lightit\Users\Domain\Models\User;
 
 /**
- * @property int                          $id
- * @property int                          $doctor_id
- * @property int                          $clinic_id
- * @property int                          $user_id
- * @property string                       $start_time
- * @property string                       $end_time
- * @property \Carbon\CarbonImmutable|null $created_at
- * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property int                     $id
+ * @property int                     $doctor_id
+ * @property int                     $clinic_id
+ * @property int                     $user_id
+ * @property \Carbon\CarbonImmutable $start_time
+ * @property \Carbon\CarbonImmutable $end_time
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
  * @property-read Clinic $clinic
  * @property-read Doctor $doctor
  * @property-read User $user
@@ -51,9 +51,14 @@ use Lightit\Users\Domain\Models\User;
 class Appointment extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = [
         'id',
+    ];
+
+    protected $casts = [
+        'start_time' => 'immutable_datetime',
+        'end_time' => 'immutable_datetime',
     ];
 
     /**

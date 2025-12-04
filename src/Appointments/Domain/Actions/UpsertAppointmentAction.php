@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\Domain\Actions;
 
+use Carbon\CarbonImmutable;
 use Lightit\Appointments\App\Exceptions\InvalidDatesException;
 use Lightit\Appointments\App\Exceptions\OverlappingException;
 use Lightit\Appointments\App\Exceptions\RelationException;
@@ -12,8 +13,6 @@ use Lightit\Appointments\Domain\Enums\Message;
 use Lightit\Appointments\Domain\Enums\Subject;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Users\Domain\Models\User;
-
-use function Symfony\Component\Clock\now;
 
 class UpsertAppointmentAction
 {
@@ -43,8 +42,7 @@ class UpsertAppointmentAction
             throw new RelationException();
         }
 
-        $now = now();
-        if ($appointmentDto->startTime->lessThan($now)) {
+        if ($appointmentDto->startTime->lessThan(CarbonImmutable::now())) {
             throw new InvalidDatesException(Message::START);
         }
         if ($appointmentDto->endTime->lessThanOrEqualTo($appointmentDto->startTime)) {
@@ -54,8 +52,8 @@ class UpsertAppointmentAction
         $appointment->doctor_id = $appointmentDto->doctorId;
         $appointment->user_id = $user->id;
         $appointment->clinic_id = $appointmentDto->clinicId;
-        $appointment->start_time = $appointmentDto->startTime->toString();
-        $appointment->end_time = $appointmentDto->endTime->toString();
+        $appointment->start_time = $appointmentDto->startTime;
+        $appointment->end_time = $appointmentDto->endTime;
 
         $appointment->saveOrFail();
 

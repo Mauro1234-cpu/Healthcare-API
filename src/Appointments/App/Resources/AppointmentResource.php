@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\App\Resources;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Lightit\Appointments\Domain\Models\Appointment;
@@ -15,7 +16,7 @@ class AppointmentResource extends JsonResource
 {
     /**
      * @return array{
-     *   id: int, doctor_id: int, user_id: int, clinic_id: int, start_time: string, end_time: string, doctor_name: mixed, user_name: mixed, clinic_name: mixed
+     *   id: int, doctor_id: int, user_id: int, clinic_id: int, start_time: CarbonImmutable, end_time: CarbonImmutable, doctor_name: mixed, user_name: mixed, clinic_name: mixed
      * }
      */
     public function toArray(Request $request): array

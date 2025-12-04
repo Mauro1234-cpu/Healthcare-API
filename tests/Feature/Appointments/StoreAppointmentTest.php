@@ -13,7 +13,6 @@ use Tests\RequestFactories\StoreAppointmentRequestFactory;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\postJson;
-use function Symfony\Component\Clock\now;
 
 describe('appointments', function (): void {
     it('throw a message error of overlapping if the doctor already has an appointment', function (): void {
@@ -26,7 +25,7 @@ describe('appointments', function (): void {
         AppointmentFactory::new()->create([
             'doctor_id' => $doctor->id,
             'clinic_id' => $clinic->id,
-            'start_time' => now(),
+            'start_time' => Carbonimmutable::now(),
             'end_time' => CarbonImmutable::now()->addHour(),
         ]);
         $appointment = StoreAppointmentRequestFactory::new()->create([
