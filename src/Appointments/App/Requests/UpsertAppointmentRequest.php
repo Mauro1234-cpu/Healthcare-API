@@ -41,8 +41,8 @@ class UpsertAppointmentRequest extends FormRequest
         return new AppointmentDto(
             doctorId: $this->integer(self::DOCTOR_ID),
             clinicId: $this->integer(self::CLINIC_ID),
-            startTime: CarbonImmutable::parse($end),
-            endTime: CarbonImmutable::parse($start)
+            startTime: CarbonImmutable::parse($start),
+            endTime: CarbonImmutable::parse($end)
         );
     }
 }
