@@ -139,43 +139,12 @@ describe('appointments', function (): void {
                 'message' => 'This doctor does not work at this clinic',
             ],
         ]);
-
-        $dto = new AppointmentDto(
-            doctorId: $doctor->id,
-            clinicId: $clinic->id,
-            startTime: CarbonImmutable::now()->toDateTimeString(),
-            endTime: CarbonImmutable::now()->addHour()->toDateTimeString()
-        );
-    });
-
-    it('does not throw RelationException when the Doctor belong to a Clinic', function (): void {
-        $doctor = DoctorFactory::new()->createOne();
-        $user = UserFactory::new()->createOne();
-        $clinic = ClinicFactory::new()->createOne();
-        $clinic->doctors()->attach($doctor);
-
-        $dto = new AppointmentDto(
-            doctorId: $doctor->id,
-            clinicId: $clinic->id,
-            startTime: CarbonImmutable::now()->toDateTimeString(),
-            endTime: CarbonImmutable::now()->addHour()->toDateTimeString()
-        );
-
-        $action = new UpsertAppointmentAction(
-            new ValidateDoctorOverlapping(),
-            new ValidateUserOverlapping(),
-            new ValidateClinicDoctorRelation(),
-        );
-
-        expect(fn (): \Lightit\Appointments\Domain\Models\Appointment => $action->execute($dto, $user))->not()->toThrow(
-            RelationException::class
-        );
     });
 
     it('creates an appointment if all rules pass', function (): void {
         $doctor = DoctorFactory::new()->createOne();
         $user = UserFactory::new()->createOne();
-        
+        actingAs($user);
         $clinic = ClinicFactory::new()->createOne();
         $clinic->doctors()->attach($doctor);
 
