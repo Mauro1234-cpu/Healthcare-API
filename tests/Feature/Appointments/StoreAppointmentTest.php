@@ -18,6 +18,7 @@ use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 use Tests\RequestFactories\StoreAppointmentRequestFactory;
 
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\postJson;
 
 describe('appointments', function (): void {
@@ -162,5 +163,37 @@ describe('appointments', function (): void {
         expect(fn (): \Lightit\Appointments\Domain\Models\Appointment => $action->execute($dto, $user))->not()->toThrow(
             RelationException::class
         );
+    });
+
+    it('throw a InvalidDatesException if the start time date is before to the current date', function (): void {
+    });
+
+
+    it('creates an appointment if all rules pass', function (): void {
+        $doctor = DoctorFactory::new()->createOne();
+        $user = UserFactory::new()->createOne();
+        $clinic = ClinicFactory::new()->createOne();
+        $clinic->doctors()->attach($doctor);
+
+
+        $dto = new AppointmentDto(
+            doctorId: $doctor->id,
+            clinicId: $clinic->id,
+            startTime: now()->toDateTimeString(),
+            endTime: now()->addHour()->toDateTimeString()
+        );
+
+
+        $action = new UpsertAppointmentAction(
+            new ValidateDoctorOverlapping(),
+            new ValidateUserOverlapping(),
+            new ValidateClinicDoctorRelation()
+        );
+
+
+        $appointment = $action->execute(appointmentDto: $dto, user: $user);
+
+
+        assertDatabaseHas('appointments', ['id' => $appointment->id]);
     });
 });

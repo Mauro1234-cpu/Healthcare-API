@@ -11,7 +11,7 @@ use Lightit\Authentication\Domain\DataTransferObjects\LoginDto;
 /**
  * @mixin LoginDto
  */
-class RefreshResource extends JsonResource
+class AuthResource extends JsonResource
 {
     /**
      * @return array{accessToken: string, tokenType: string, expiresIn: int}

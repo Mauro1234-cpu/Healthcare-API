@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lightit\Authentication\App\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Lightit\Authentication\App\Rescources\RefreshResource;
+use Lightit\Authentication\App\Rescources\AuthResource;
 use Lightit\Authentication\Domain\DataTransferObjects\LoginDto;
 use PHPOpenSourceSaver\JWTAuth\Factory as JWTAuth;
 use PHPOpenSourceSaver\JWTAuth\JWT;
@@ -20,7 +20,7 @@ class RefreshController
             expiresIn: $jwtAuth->getTTL() * 60,
         );
 
-        return RefreshResource::make($credentials)
+        return AuthResource::make($credentials)
             ->response();
     }
 }

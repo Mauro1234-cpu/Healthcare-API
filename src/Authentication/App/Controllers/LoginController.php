@@ -6,7 +6,7 @@ namespace Lightit\Authentication\App\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Lightit\Authentication\App\Requests\LoginRequest;
-use Lightit\Authentication\App\Rescources\LoginResource;
+use Lightit\Authentication\App\Rescources\AuthResource;
 use Lightit\Authentication\Domain\Actions\LoginAction;
 
 class LoginController
@@ -17,7 +17,7 @@ class LoginController
 
         $auth = $loginAction->execute($credentials);
 
-        return LoginResource::make($auth)
+        return AuthResource::make($auth)
             ->response();
     }
 }
