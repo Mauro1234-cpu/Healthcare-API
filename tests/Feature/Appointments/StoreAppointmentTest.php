@@ -22,7 +22,7 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\postJson;
 
 describe('appointments', function (): void {
-    it('throws an exception if the doctor already has an appointment', function (): void {
+    it('throw a message error of overlapping if the doctor already has an appointment', function (): void {
         $user = UserFactory::new()->createOne();
         actingAs($user);
         $doctor = DoctorFactory::new()->createOne();
@@ -53,7 +53,7 @@ describe('appointments', function (): void {
         ]);
     });
 
-    it('throw a InvalidDatesException if the end time date is before start time', function (): void {
+    it('throw a message error if the end time date is before start time', function (): void {
         $user = UserFactory::new()->createOne();
         actingAs($user);
         $doctor = DoctorFactory::new()->createOne();
@@ -84,7 +84,7 @@ describe('appointments', function (): void {
         ]);
     });
 
-    it('does not throw a InvalidDatesException if the end time date is after to start time', function (): void {
+    it('throw the data of the created appointment if the end time date is after to start time', function (): void {
         $user = UserFactory::new()->createOne();
         actingAs($user);
         $doctor = DoctorFactory::new()->createOne();
@@ -115,10 +115,29 @@ describe('appointments', function (): void {
         ]);
     });
 
-    it('throw an exception if the doctor does not work at the selected clinic', function (): void {
-        $doctor = DoctorFactory::new()->createOne();
+    it('throw a message error if the doctor does not work at the selected clinic', function (): void {
         $user = UserFactory::new()->createOne();
+        actingAs($user);
+        $doctor = DoctorFactory::new()->createOne();
         $clinic = ClinicFactory::new()->createOne();
+
+        $appointment = StoreAppointmentRequestFactory::new()->create([
+            'doctorId' => $doctor->id,
+            'clinicId' => $clinic->id,
+            'startTime' => CarbonImmutable::now()->addMinute()->toDateTimeString(),
+            'endTime' => CarbonImmutable::now()->addHour()->toDateTimeString(),
+        ]);
+
+        $response = postJson('/api/appointments', $appointment);
+
+        $response->assertStatus(409);
+
+        $response->assertJson([
+            'error' => [
+                'code' => 'APPOINTMENT_OVERLAP',
+                'message' => 'This doctor does not work at this clinic',
+            ],
+        ]);
 
         $dto = new AppointmentDto(
             doctorId: $doctor->id,
@@ -126,19 +145,6 @@ describe('appointments', function (): void {
             startTime: CarbonImmutable::now()->toDateTimeString(),
             endTime: CarbonImmutable::now()->addHour()->toDateTimeString()
         );
-
-        $action = new UpsertAppointmentAction(
-            new ValidateDoctorOverlapping(),
-            new ValidateUserOverlapping(),
-            new ValidateClinicDoctorRelation(),
-        );
-
-        try {
-            $action->execute($dto, $user);
-            $this->fail('Expected RelationException was not thrown.');
-        } catch (RelationException $e) {
-            expect($e->getMessage())->tobe('This doctor does not work at this clinic');
-        }
     });
 
     it('does not throw RelationException when the Doctor belong to a Clinic', function (): void {
