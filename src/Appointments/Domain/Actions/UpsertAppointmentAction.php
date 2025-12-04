@@ -42,6 +42,7 @@ class UpsertAppointmentAction
             throw new RelationException();
         }
 
+
         if ($appointmentDto->startTime->lessThan(CarbonImmutable::now())) {
             throw new InvalidDatesException(Message::START);
         }

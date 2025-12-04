@@ -16,6 +16,15 @@ class InvalidDatesException extends HttpException
 
     public function __construct(Message $message)
     {
-        parent::__construct($message->value);
+        $finalMessage = $this->resolveMessage($message);
+        parent::__construct($finalMessage);
+    }
+
+    private function resolveMessage(Message $message): string
+    {
+        return match ($message) {
+            Message::START => 'The start time field must be a date after or equal to now.',
+            Message::END => 'The end time field must be a date after start time.'
+        };
     }
 }
