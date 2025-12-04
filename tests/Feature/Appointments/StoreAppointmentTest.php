@@ -9,17 +9,11 @@ use Database\Factories\AppointmentFactory;
 use Database\Factories\ClinicFactory;
 use Database\Factories\DoctorFactory;
 use Database\Factories\UserFactory;
-use Lightit\Appointments\App\Exceptions\RelationException;
-use Lightit\Appointments\Domain\Actions\UpsertAppointmentAction;
-use Lightit\Appointments\Domain\Actions\ValidateClinicDoctorRelation;
-use Lightit\Appointments\Domain\Actions\ValidateDoctorOverlapping;
-use Lightit\Appointments\Domain\Actions\ValidateUserOverlapping;
-use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
 use Tests\RequestFactories\StoreAppointmentRequestFactory;
 
 use function Pest\Laravel\actingAs;
-use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\postJson;
+use function Symfony\Component\Clock\now;
 
 describe('appointments', function (): void {
     it('throw a message error of overlapping if the doctor already has an appointment', function (): void {
@@ -148,25 +142,26 @@ describe('appointments', function (): void {
         $clinic = ClinicFactory::new()->createOne();
         $clinic->doctors()->attach($doctor);
 
+        $appointment = StoreAppointmentRequestFactory::new()->create([
+            'doctorId' => $doctor->id,
+            'clinicId' => $clinic->id,
+            'startTime' => CarbonImmutable::now()->addMinute()->toDateTimeString(),
+            'endTime' => CarbonImmutable::now()->addHour()->toDateTimeString(),
+        ]);
 
-        $dto = new AppointmentDto(
-            doctorId: $doctor->id,
-            clinicId: $clinic->id,
-            startTime: now()->toDateTimeString(),
-            endTime: now()->addHour()->toDateTimeString()
-        );
+        $response = postJson('/api/appointments', $appointment);
 
+        $response->assertStatus(201);
 
-        $action = new UpsertAppointmentAction(
-            new ValidateDoctorOverlapping(),
-            new ValidateUserOverlapping(),
-            new ValidateClinicDoctorRelation()
-        );
-
-
-        $appointment = $action->execute(appointmentDto: $dto, user: $user);
-
-
-        assertDatabaseHas('appointments', ['id' => $appointment->id]);
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'doctor_id',
+                'user_id',
+                'clinic_id',
+                'start_time',
+                'end_time',
+            ],
+        ]);
     });
 });
