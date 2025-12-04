@@ -84,7 +84,7 @@ describe('appointments', function (): void {
         ]);
     });
 
-    it('throw the data of the created appointment if the end time date is after to start time', function (): void {
+    it('throw a message error if the start time date is before to the current date', function (): void {
         $user = UserFactory::new()->createOne();
         actingAs($user);
         $doctor = DoctorFactory::new()->createOne();
@@ -95,22 +95,23 @@ describe('appointments', function (): void {
         $appointment = StoreAppointmentRequestFactory::new()->create([
             'doctorId' => $doctor->id,
             'clinicId' => $clinic->id,
-            'startTime' => CarbonImmutable::now()->addMinute()->toDateTimeString(),
-            'endTime' => CarbonImmutable::now()->addHour()->toDateTimeString(),
+            'startTime' => CarbonImmutable::now()->subHour()->toDateTimeString(),
+            'endTime' => CarbonImmutable::now()->toDateTimeString(),
         ]);
 
         $response = postJson('/api/appointments', $appointment);
 
-        $response->assertStatus(201);
+        $response->assertStatus(422);
 
-        $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'doctor_id',
-                'user_id',
-                'clinic_id',
-                'start_time',
-                'end_time',
+        $response->assertJson([
+            'error' => [
+                'code' => 'validation_failed',
+                'message' => 'The start time field must be a date after or equal to now.',
+                'fields' => [
+                    'startTime' => [
+                        'The start time field must be a date after or equal to now.',
+                    ],
+                ],
             ],
         ]);
     });
@@ -171,13 +172,10 @@ describe('appointments', function (): void {
         );
     });
 
-    it('throw a InvalidDatesException if the start time date is before to the current date', function (): void {
-    });
-
-
     it('creates an appointment if all rules pass', function (): void {
         $doctor = DoctorFactory::new()->createOne();
         $user = UserFactory::new()->createOne();
+        
         $clinic = ClinicFactory::new()->createOne();
         $clinic->doctors()->attach($doctor);
 
