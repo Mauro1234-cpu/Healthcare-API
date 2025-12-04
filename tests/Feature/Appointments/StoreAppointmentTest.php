@@ -134,6 +134,36 @@ describe('appointments', function (): void {
         ]);
     });
 
+    it('allows a user to have multiple appointments', function (): void {
+        $doctor = DoctorFactory::new()->createOne();
+        $clinic = ClinicFactory::new()->createOne();
+        $clinic->doctors()->attach($doctor);
+        $user = UserFactory::new()->createOne();
+        actingAs($user);
+
+        $firstAppointment = StoreAppointmentRequestFactory::new()->create([
+            'doctorId' => $doctor->id,
+            'clinicId' => $clinic->id,
+            'startTime' => CarbonImmutable::now()->addMinute()->toDateTimeString(),
+            'endTime' => CarbonImmutable::now()->addHour()->toDateTimeString(),
+        ]);
+
+        $firstResponse = postJson('/api/appointments', $firstAppointment);
+        $firstResponse->assertCreated();
+
+        $secondAppointment = StoreAppointmentRequestFactory::new()->create([
+            'doctorId' => $doctor->id,
+            'clinicId' => $clinic->id,
+            'startTime' => CarbonImmutable::now()->addHours(2)->toDateTimeString(),
+            'endTime' => CarbonImmutable::now()->addHours(3)->toDateTimeString(),
+        ]);
+
+        $secondResponse = postJson('/api/appointments', $secondAppointment);
+        $secondResponse->assertCreated();
+
+        expect($user->appointments()->count())->toBe(2);
+    });
+
     it('creates an appointment if all rules pass', function (): void {
         $doctor = DoctorFactory::new()->createOne();
         $user = UserFactory::new()->createOne();
