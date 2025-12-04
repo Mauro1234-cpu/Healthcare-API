@@ -134,7 +134,7 @@ describe('appointments', function (): void {
 
         $response->assertJson([
             'error' => [
-                'code' => 'APPOINTMENT_OVERLAP',
+                'code' => 'INVALID_CLINIC_DOCTOR',
                 'message' => 'This doctor does not work at this clinic',
             ],
         ]);
