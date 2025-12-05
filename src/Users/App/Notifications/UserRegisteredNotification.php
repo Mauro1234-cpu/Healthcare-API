@@ -15,10 +15,6 @@ class UserRegisteredNotification extends Notification implements ShouldQueue, Sh
 {
     use Queueable;
 
-    public function __construct()
-    {
-    }
-
     /**
      * @return array<int, string>
      */

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\Domain\Actions;
 
+use Carbon\CarbonImmutable;
+use Lightit\Appointments\App\Exceptions\InvalidDatesException;
 use Lightit\Appointments\App\Exceptions\OverlappingException;
 use Lightit\Appointments\App\Exceptions\RelationException;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
+use Lightit\Appointments\Domain\Enums\Message;
 use Lightit\Appointments\Domain\Enums\Subject;
 use Lightit\Appointments\Domain\Models\Appointment;
 use Lightit\Users\Domain\Models\User;
@@ -37,6 +40,14 @@ class UpsertAppointmentAction
 
         if (! $this->relationClinicDoctor->execute($appointmentDto)) {
             throw new RelationException();
+        }
+
+
+        if ($appointmentDto->startTime->lessThan(CarbonImmutable::now())) {
+            throw new InvalidDatesException(Message::START);
+        }
+        if ($appointmentDto->endTime->lessThanOrEqualTo($appointmentDto->startTime)) {
+            throw new InvalidDatesException(Message::END);
         }
 
         $appointment->doctor_id = $appointmentDto->doctorId;

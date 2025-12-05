@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lightit\Appointments\App\Requests;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Lightit\Appointments\Domain\DataTransferObjects\AppointmentDto;
@@ -32,11 +33,16 @@ class UpsertAppointmentRequest extends FormRequest
 
     public function toDto(): AppointmentDto
     {
+        /** @var string $start */
+        $start = $this->input(self::START_TIME);
+        /** @var string $end */
+        $end = $this->input(self::END_TIME);
+
         return new AppointmentDto(
             doctorId: $this->integer(self::DOCTOR_ID),
             clinicId: $this->integer(self::CLINIC_ID),
-            startTime: $this->string(self::START_TIME)->toString(),
-            endTime: $this->string(self::END_TIME)->toString()
+            startTime: CarbonImmutable::parse($start),
+            endTime: CarbonImmutable::parse($end)
         );
     }
 }

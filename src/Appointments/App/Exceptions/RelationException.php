@@ -11,7 +11,7 @@ class RelationException extends HttpException
 {
     protected int $status = JsonResponse::HTTP_CONFLICT;
 
-    protected string $errorCode = 'APPOINTMENT_OVERLAP';
+    protected string $errorCode = 'INVALID_CLINIC_DOCTOR';
 
     public function __construct()
     {
